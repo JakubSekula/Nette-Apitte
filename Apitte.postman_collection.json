@@ -1,0 +1,573 @@
+{
+	"info": {
+		"_postman_id": "9108e192-0046-4ba4-98bd-bb473d00ddb0",
+		"name": "Apitte",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User adition test\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Test\",\n    \"surname\":\"Testterrr\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/v1/authors/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"authors",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User getter\", function(){",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/api/v1/authors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Category adition test\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/v1/category/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"category",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Category getter\", function(){",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/api/v1/category",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add publisher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Publisher adition test\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/v1/publisher/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"publisher",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get publisher",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Publisher getter\", function(){",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/api/v1/publishers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"publishers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Location adition test\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"library\":\"Test library\",\n    \"name\":\"Test name\",\n    \"pegi\":\"13\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/v1/locations/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"locations",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Location getter\", function(){",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/api/v1/locations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"locations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Book adition test\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"author\":\"1\",\n    \"publisher\":\"1\",\n    \"category\":\"1\",\n    \"name\":\"Test\",\n    \"published\":\"1998\",\n    \"isbn\":\"4875-DWTD-ASFA-5879\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/v1/books/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"books",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Book getter\", function(){",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/api/v1/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add magazine",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Magazine adition test\", function(){",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"publisher\":\"1\",\n    \"name\":\"Test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/api/v1/magazines/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"magazines",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get magazine",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Magazine getter\", function(){",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Token",
+						"value": "admin",
+						"type": "text"
+					},
+					{
+						"key": "Origin",
+						"value": "https://seznam.cz",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost/api/v1/magazines",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"magazines"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -14,9 +14,12 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Nette\Utils\Random;
+use App\Model\Database\Repository\AuthorRepository;
 
 /**
- * @Entity()
+ * @Entity(repositoryClass="App\Model\Database\Repository\AuthorRepository")
+ * @ORM\Table(name="`author`")
+ * @ORM\HasLifecycleCallbacks
  */
 class Author extends AbstractEntity
 {

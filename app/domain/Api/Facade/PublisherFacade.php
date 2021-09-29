@@ -2,14 +2,18 @@
 
 namespace App\Domain\Api\Facade;
 
+use App\Domain\Api\Request\CreatePublisherReqDto;
 use App\Domain\Api\Request\CreateUserReqDto;
+use App\Domain\Api\Response\BookResDto;
+use App\Domain\Api\Response\PublisherResDto;
 use App\Domain\Api\Response\UserResDto;
+use App\Model\Database\Entity\Publisher;
 use App\Model\Database\Entity\User;
 use App\Model\Database\EntityManager;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
 use App\Model\Security\Passwords;
 
-final class UsersFacade
+final class PublisherFacade
 {
 
 	/** @var EntityManager */
@@ -23,21 +27,22 @@ final class UsersFacade
 	/**
 	 * @param mixed[] $criteria
 	 * @param string[] $orderBy
-	 * @return UserResDto[]
+	 * @return PublisherResDto[]
 	 */
 	public function findBy(array $criteria = [], array $orderBy = ['id' => 'ASC'], int $limit = 10, int $offset = 0): array
 	{
-		$entities = $this->em->getUserRepository()->findBy($criteria, $orderBy, $limit, $offset);
+		$entities = $this->em->getPublisherRepository()->findBy($criteria, $orderBy, $limit, $offset);
 		$result = [];
 
 		foreach ($entities as $entity) {
-			$result[] = UserResDto::from($entity);
+			$result[] = PublisherResDto::from($entity);
 		}
+
 		return $result;
 	}
 
 	/**
-	 * @return UserResDto[]
+	 * @return PublisherResDto[]
 	 */
 	public function findAll(int $limit = 10, int $offset = 0): array
 	{
@@ -48,41 +53,36 @@ final class UsersFacade
 	 * @param mixed[] $criteria
 	 * @param string[] $orderBy
 	 */
-	public function findOneBy(array $criteria, ?array $orderBy = null): UserResDto
+	public function findOneBy(array $criteria, ?array $orderBy = null): PublisherResDto
 	{
-		$entity = $this->em->getUserRepository()->findOneBy($criteria, $orderBy);
+		$entity = $this->em->getPublisherRepository()->findOneBy($criteria, $orderBy);
 
 		if (!$entity) {
 			throw new EntityNotFoundException();
 		}
 
-		return UserResDto::from($entity);
+		return PublisherResDto::from($entity);
 	}
 
-	public function findByUserName(string $name, string $surname): UserResDto
-	{
-		return $this->findOneBy(['name' => $name, 'surname' => $surname]);
-	}
-
-	public function findOne(int $id): UserResDto
+	public function findOne(int $id): PublisherResDto
 	{
 		return $this->findOneBy(['id' => $id]);
 	}
 
-	public function create(CreateUserReqDto $dto): User
+	public function create(CreatePublisherReqDto $dto): Publisher
 	{
-		$user = new User(
-			$dto->name,
-			$dto->surname,
-			$dto->email,
-			$dto->username,
-			Passwords::create()->hash($dto->password ?? md5(microtime()))
-		);
+		$publisher = new Publisher();
+		$publisher->setName($dto->name);
 
-		$this->em->persist($user);
-		$this->em->flush($user);
+		$this->em->persist($publisher);
+		$this->em->flush($publisher);
 
-		return $user;
+		return $publisher;
 	}
+
+    public function findByPublisherName(string $name): PublisherResDto
+    {
+		return $this->findOneBy(['name' => $name]);
+    }
 
 }

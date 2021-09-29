@@ -4,6 +4,11 @@ services:
 	# Domain =================
 	- App\Domain\Api\Facade\UsersFacade
 	- App\Domain\Api\Facade\AuthorFacade
+	- App\Domain\Api\Facade\BookFacade
+	- App\Domain\Api\Facade\CategoryFacade
+	- App\Domain\Api\Facade\MagazineFacade
+	- App\Domain\Api\Facade\PublisherFacade
+	- App\Domain\Api\Facade\LocationFacade
 
 	## Serialize =============
 	symfony.serializer.serializer:

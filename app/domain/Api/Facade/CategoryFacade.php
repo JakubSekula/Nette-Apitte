@@ -2,14 +2,17 @@
 
 namespace App\Domain\Api\Facade;
 
+use App\Domain\Api\Request\CreateCategoryReqDto;
 use App\Domain\Api\Request\CreateUserReqDto;
+use App\Domain\Api\Response\CategoryResDto;
 use App\Domain\Api\Response\UserResDto;
+use App\Model\Database\Entity\Category;
 use App\Model\Database\Entity\User;
 use App\Model\Database\EntityManager;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
 use App\Model\Security\Passwords;
 
-final class UsersFacade
+final class CategoryFacade
 {
 
 	/** @var EntityManager */
@@ -23,66 +26,62 @@ final class UsersFacade
 	/**
 	 * @param mixed[] $criteria
 	 * @param string[] $orderBy
-	 * @return UserResDto[]
+	 * @return CategoryResDto[]
 	 */
 	public function findBy(array $criteria = [], array $orderBy = ['id' => 'ASC'], int $limit = 10, int $offset = 0): array
 	{
-		$entities = $this->em->getUserRepository()->findBy($criteria, $orderBy, $limit, $offset);
+		$entities = $this->em->getCategoryRepository()->findBy($criteria, $orderBy, $limit, $offset);
 		$result = [];
 
 		foreach ($entities as $entity) {
-			$result[] = UserResDto::from($entity);
+			$result[] = CategoryResDto::from($entity);
 		}
+
 		return $result;
 	}
 
 	/**
-	 * @return UserResDto[]
+	 * @return CategoryResDto[]
 	 */
 	public function findAll(int $limit = 10, int $offset = 0): array
 	{
 		return $this->findBy([], ['id' => 'ASC'], $limit, $offset);
 	}
 
+	public function findByCategoryName(string $name): CategoryResDto
+	{
+		return $this->findOneBy(['name' => $name]);
+	}
+
 	/**
 	 * @param mixed[] $criteria
 	 * @param string[] $orderBy
 	 */
-	public function findOneBy(array $criteria, ?array $orderBy = null): UserResDto
+	public function findOneBy(array $criteria, ?array $orderBy = null): CategoryResDto
 	{
-		$entity = $this->em->getUserRepository()->findOneBy($criteria, $orderBy);
+		$entity = $this->em->getCategoryRepository()->findOneBy($criteria, $orderBy);
 
 		if (!$entity) {
 			throw new EntityNotFoundException();
 		}
 
-		return UserResDto::from($entity);
+		return CategoryResDto::from($entity);
 	}
 
-	public function findByUserName(string $name, string $surname): UserResDto
-	{
-		return $this->findOneBy(['name' => $name, 'surname' => $surname]);
-	}
-
-	public function findOne(int $id): UserResDto
+	public function findOne(int $id): CategoryResDto
 	{
 		return $this->findOneBy(['id' => $id]);
 	}
 
-	public function create(CreateUserReqDto $dto): User
+	public function create(CreateCategoryReqDto $dto): Category
 	{
-		$user = new User(
-			$dto->name,
-			$dto->surname,
-			$dto->email,
-			$dto->username,
-			Passwords::create()->hash($dto->password ?? md5(microtime()))
-		);
+		$category = new Category();
+		$category->setName($dto->name);
 
-		$this->em->persist($user);
-		$this->em->flush($user);
+		$this->em->persist($category);
+		$this->em->flush($category);
 
-		return $user;
+		return $category;
 	}
 
 }

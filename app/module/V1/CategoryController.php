@@ -10,25 +10,26 @@ use Apitte\Core\Annotation\Controller\RequestParameters;
 use Apitte\Core\Annotation\Controller\Tag;
 use Apitte\Core\Exception\Api\ClientErrorException;
 use Apitte\Core\Http\ApiRequest;
+use App\Domain\Api\Facade\CategoryFacade;
 use App\Domain\Api\Facade\UsersFacade;
+use App\Domain\Api\Response\CategoryResDto;
 use App\Domain\Api\Response\UserResDto;
-use App\Model\Exception\Runtime\Database\EntityNotFoundException;
-use App\Module\V1\BaseV1Controller;
+use Doctrine\ORM\EntityNotFoundException;
 use Nette\Http\IResponse;
 
 /**
- * @Path("/users")
- * @Tag("Users")
+ * @Path("/category")
+ * @Tag("Category")
  */
-class UsersController extends BaseV1Controller
+class CategoryController extends BaseV1Controller
 {
 
-	/** @var UsersFacade */
-	private $usersFacade;
+	/** @var CategoryFacade */
+	private $categoryFacade;
 
-	public function __construct(UsersFacade $usersFacade)
+	public function __construct(CategoryFacade $categoryFacade)
 	{
-		$this->usersFacade = $usersFacade;
+		$this->categoryFacade = $categoryFacade;
 	}
 
 	/**
@@ -41,11 +42,11 @@ class UsersController extends BaseV1Controller
 	 * 		@RequestParameter(name="limit", type="int", in="query", required=false, description="Data limit"),
 	 * 		@RequestParameter(name="offset", type="int", in="query", required=false, description="Data offset")
 	 * })
-	 * @return UserResDto[]
+	 * @return CategoryResDto[]
 	 */
 	public function index(ApiRequest $request): array
 	{
-		return $this->usersFacade->findAll(
+		return $this->categoryFacade->findAll(
 			intval($request->getParameter('limit', 10)),
 			intval($request->getParameter('offset', 0))
 		);
@@ -53,22 +54,21 @@ class UsersController extends BaseV1Controller
 
 	/**
 	 * @OpenApi("
-	 *   summary: Get user by name.
+	 *   summary: Get category by name.
 	 * ")
-	 * @Path("/{name}/{surname}")
+	 * @Path("/{name}")
 	 * @Method("GET")
 	 * @RequestParameters({
-	 *      @RequestParameter(name="name", in="path", type="string", description="User name"),
-	 * 		@RequestParameter(name="surname", in="path", type="string", description="User surname")
+	 *      @RequestParameter(name="name", in="path", type="string", description="Category name")
 	 * })
 	 */
-	public function byName(ApiRequest $request): UserResDto
+	public function byName(ApiRequest $request): CategoryResDto
 	{
 		try {
-			return $this->usersFacade->findByUserName($request->getParameter('name'), $request->getParameter('surname'));
+			return $this->categoryFacade->findByCategoryName($request->getParameter('name'));
 		} catch (EntityNotFoundException $e) {
 			throw ClientErrorException::create()
-				->withMessage('User not found')
+				->withMessage('Category not found')
 				->withCode(IResponse::S404_NOT_FOUND);
 		}
 	}

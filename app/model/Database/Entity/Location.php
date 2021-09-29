@@ -18,7 +18,9 @@ use Nette\Utils\Random;
 use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
- * @Entity()
+ * @Entity(repositoryClass="App\Model\Database\Repository\LocationRepository")
+ * @ORM\Table(name="`location`")
+ * @ORM\HasLifecycleCallbacks
  */
 class Location extends AbstractEntity
 {
@@ -32,7 +34,7 @@ class Location extends AbstractEntity
 	 */
 	private $name;
 
-	/** @var Pegi
+	/** @var integer
 	 * @Column(type="integer")
 	 */
 	private $pegi;
@@ -66,9 +68,9 @@ class Location extends AbstractEntity
 	}
 
 	/**
-	 * @param string $pegi
+	 * @param integer $pegi
 	 */
-	public function setPegi(string $pegi){
+	public function setPegi(int $pegi){
 		$this->pegi = $pegi;
 	}
 

@@ -17,7 +17,9 @@ use Nette\Utils\Random;
 use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
- * @Entity()
+ * @Entity(repositoryClass="App\Model\Database\Repository\MagazineRepository")
+ * @ORM\Table(name="`magazine`")
+ * @ORM\HasLifecycleCallbacks
  */
 class Magazine extends AbstractEntity
 {
@@ -55,11 +57,28 @@ class Magazine extends AbstractEntity
 		return $this->publisher;
 	}
 
-	public function swapBorrowed(){
-		if($this->borrowed == true){
-			$this->borrowed = false;
+	public function getBorrowed(){
+		return $this->borrowed;
+	}
+
+	public function setBorrowed(){
+		$this->borrowed = false;
+	}
+
+	public function borrow(){
+		if($this->borrowed){
+			return false;
 		} else {
 			$this->borrowed = true;
 		}
 	}
+
+	public function returnMagazine(){
+		if(!$this->borrowed){
+			return false;
+		} else {
+			$this->borrowed = false;
+		}
+	}
+
 }

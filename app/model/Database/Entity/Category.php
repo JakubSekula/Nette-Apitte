@@ -17,7 +17,9 @@ use Nette\Utils\Random;
 use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
- * @Entity()
+ * @Entity(repositoryClass="App\Model\Database\Repository\CategoryRepository")
+ * @ORM\Table(name="`category`")
+ * @ORM\HasLifecycleCallbacks
  */
 class Category extends AbstractEntity
 {

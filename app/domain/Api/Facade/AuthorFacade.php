@@ -2,6 +2,7 @@
 
 namespace App\Domain\Api\Facade;
 
+use App\Domain\Api\Request\CreateAuthorReqDto;
 use App\Domain\Api\Request\CreateUserReqDto;
 use App\Domain\Api\Response\AuthorResDto;
 use App\Domain\Api\Response\UserResDto;
@@ -29,7 +30,7 @@ final class AuthorFacade
 	 */
 	public function findBy(array $criteria = [], array $orderBy = ['id' => 'ASC'], int $limit = 10, int $offset = 0): array
 	{
-		$entities = $this->em->getAuthorsRepository()->findBy($criteria, $orderBy, $limit, $offset);
+		$entities = $this->em->getAuthorRepository()->findBy($criteria, $orderBy, $limit, $offset);
 		$result = [];
 
 		foreach ($entities as $entity) {
@@ -51,36 +52,32 @@ final class AuthorFacade
 	 * @param mixed[] $criteria
 	 * @param string[] $orderBy
 	 */
-	public function findOneBy(array $criteria, ?array $orderBy = null): UserResDto
+	public function findOneBy(array $criteria, ?array $orderBy = null):AuthorResDto
 	{
-		$entity = $this->em->getAuthorsRepository()->findOneBy($criteria, $orderBy);
+		$entity = $this->em->getAuthorRepository()->findOneBy($criteria, $orderBy);
 
 		if (!$entity) {
 			throw new EntityNotFoundException();
 		}
 
-		return UserResDto::from($entity);
+		return AuthorResDto::from($entity);
 	}
 
-	public function findOne(int $id): UserResDto
+	public function findOne(int $id): AuthorResDto
 	{
 		return $this->findOneBy(['id' => $id]);
 	}
 
-	public function create(CreateUserReqDto $dto): User
+	public function create(CreateAuthorReqDto $dto): Author
 	{
-		$user = new User(
-			$dto->name,
-			$dto->surname,
-			$dto->email,
-			$dto->username,
-			Passwords::create()->hash($dto->password ?? md5(microtime()))
-		);
+		$author = new Author();
+		$author->setName($dto->name);
+		$author->setSurname($dto->surname);
 
-		$this->em->persist($user);
-		$this->em->flush($user);
+		$this->em->persist($author);
+		$this->em->flush($author);
 
-		return $user;
+		return $author;
 	}
 
 }

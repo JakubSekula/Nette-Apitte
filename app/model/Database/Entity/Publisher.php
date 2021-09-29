@@ -17,7 +17,9 @@ use Nette\Utils\Random;
 use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
- * @Entity()
+ * @Entity(repositoryClass="App\Model\Database\Repository\PublisherRepository")
+ * @ORM\Table(name="`publisher`")
+ * @ORM\HasLifecycleCallbacks
  */
 class Publisher extends AbstractEntity
 {

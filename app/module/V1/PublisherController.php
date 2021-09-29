@@ -10,30 +10,35 @@ use Apitte\Core\Annotation\Controller\RequestParameters;
 use Apitte\Core\Annotation\Controller\Tag;
 use Apitte\Core\Exception\Api\ClientErrorException;
 use Apitte\Core\Http\ApiRequest;
-use App\Domain\Api\Facade\UsersFacade;
+use App\Domain\Api\Facade\AuthorFacade;
+use App\Domain\Api\Facade\BookFacade;
+use App\Domain\Api\Facade\PublisherFacade;
+use App\Domain\Api\Response\AuthorResDto;
+use App\Domain\Api\Response\BookResDto;
+use App\Domain\Api\Response\MagazineResDto;
+use App\Domain\Api\Response\PublisherResDto;
 use App\Domain\Api\Response\UserResDto;
-use App\Model\Exception\Runtime\Database\EntityNotFoundException;
-use App\Module\V1\BaseV1Controller;
+use Doctrine\ORM\EntityNotFoundException;
 use Nette\Http\IResponse;
 
 /**
- * @Path("/users")
- * @Tag("Users")
+ * @Path("/publishers")
+ * @Tag("Publishers")
  */
-class UsersController extends BaseV1Controller
+class PublisherController extends BaseV1Controller
 {
 
-	/** @var UsersFacade */
-	private $usersFacade;
+	/** @var PublisherFacade */
+	private $publisherFacade;
 
-	public function __construct(UsersFacade $usersFacade)
+	public function __construct(PublisherFacade $publisherFacade)
 	{
-		$this->usersFacade = $usersFacade;
+		$this->publisherFacade = $publisherFacade;
 	}
 
 	/**
 	 * @OpenApi("
-	 *   summary: List users.
+	 *   summary: List authors.
 	 * ")
 	 * @Path("/")
 	 * @Method("GET")
@@ -41,11 +46,11 @@ class UsersController extends BaseV1Controller
 	 * 		@RequestParameter(name="limit", type="int", in="query", required=false, description="Data limit"),
 	 * 		@RequestParameter(name="offset", type="int", in="query", required=false, description="Data offset")
 	 * })
-	 * @return UserResDto[]
+	 * @return PublisherResDto[]
 	 */
 	public function index(ApiRequest $request): array
 	{
-		return $this->usersFacade->findAll(
+		return $this->publisherFacade->findAll(
 			intval($request->getParameter('limit', 10)),
 			intval($request->getParameter('offset', 0))
 		);
@@ -53,22 +58,21 @@ class UsersController extends BaseV1Controller
 
 	/**
 	 * @OpenApi("
-	 *   summary: Get user by name.
+	 *   summary: Get publisher by name.
 	 * ")
-	 * @Path("/{name}/{surname}")
+	 * @Path("/{name}")
 	 * @Method("GET")
 	 * @RequestParameters({
-	 *      @RequestParameter(name="name", in="path", type="string", description="User name"),
-	 * 		@RequestParameter(name="surname", in="path", type="string", description="User surname")
+	 *      @RequestParameter(name="name", in="path", type="string", description="Publisher name")
 	 * })
 	 */
-	public function byName(ApiRequest $request): UserResDto
+	public function byName(ApiRequest $request): PublisherResDto
 	{
 		try {
-			return $this->usersFacade->findByUserName($request->getParameter('name'), $request->getParameter('surname'));
+			return $this->publisherFacade->findByPublisherName($request->getParameter('name'));
 		} catch (EntityNotFoundException $e) {
 			throw ClientErrorException::create()
-				->withMessage('User not found')
+				->withMessage('Category not found')
 				->withCode(IResponse::S404_NOT_FOUND);
 		}
 	}

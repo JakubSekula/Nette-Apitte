@@ -10,7 +10,6 @@ use Doctrine\ORM\EntityRepository;
  */
 abstract class AbstractRepository extends EntityRepository
 {
-
 	/**
 	 * Fetches all records like $key => $value pairs
 	 *

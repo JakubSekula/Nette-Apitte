@@ -26,106 +26,118 @@ class Book extends AbstractEntity
 	use TId;
 
 	/** @Column(type="string") */
-	private $name;
+	private string $name;
 
 	/** @Column(type="string") */
-	private $published;
+	private string $published;
 
 	/** @Column(type="string") */
-	private $ISBN;
+	private string $ISBN;
 
 	/** @Column(type="boolean") */
-	private $borrowed;
+	private bool $borrowed;
 
 	/**
 	 * @var Author
 	 * @ManyToOne(targetEntity="Author", inversedBy="books")
 	 * @JoinColumn(name="author", referencedColumnName="id")
 	 */
-	private $author;
+	private Author $author;
 
 	/**
 	 * @var Publisher
 	 * @ManyToOne(targetEntity="Publisher")
 	 * @JoinColumn(name="publisher", referencedColumnName="id")
 	 */
-	private $publisher;
+	private Publisher $publisher;
 
 	/**
 	 * @var Category
 	 * @ManyToOne(targetEntity="Category")
 	 * @JoinColumn(name="category", referencedColumnName="id")
 	 */
-	private $category;
+	private Category $category;
 
 	/**
 	 * @return mixed
 	 */
-	public function getName(){
+	public function getName(): string
+	{
 		return $this->name;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getPublished(){
+	public function getPublished(): string
+	{
 		return $this->published;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getISBN(){
+	public function getISBN(): string
+	{
 		return $this->ISBN;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getBorrowed(){
+	public function getBorrowed(): bool
+	{
 		return $this->borrowed;
 	}
 
-	public function setBorrowed(){
+	public function setBorrowed()
+	{
 		$this->borrowed = false;
 	}
 
 	/**
 	 * @return Author
 	 */
-	public function getAuthor(){
+	public function getAuthor(): Author
+	{
 		return $this->author;
 	}
 
 	/**
 	 * @return Publisher
 	 */
-	public function getPublisher(){
+	public function getPublisher(): Publisher
+	{
 		return $this->publisher;
 	}
 
 	/**
 	 * @return Category
 	 */
-	public function getCategory(){
+	public function getCategory(): Category
+	{
 		return $this->category;
 	}
 
-	public function setName(string $name){
+	public function setName(string $name)
+	{
 		$this->name = $name;
 	}
 
 
 
-	public function setPublished(string $published){
+	public function setPublished(string $published)
+	{
 		$this->published = $published;
 	}
 
-	public function setISBN(string $isbn){
+	public function setISBN(string $isbn)
+	{
 		$this->ISBN = $isbn;
 	}
 
-	public function swapBorrowed(){
+	public function swapBorrowed()
+	{
 		if($this->borrowed == true){
 			$this->borrowed = false;
 		} else {
@@ -136,25 +148,29 @@ class Book extends AbstractEntity
 	/**
 	 * @param Author
 	 */
-	public function setAuthor($author){
+	public function setAuthor($author)
+	{
 		$this->author = $author;
 	}
 
 	/**
 	 * @param Publisher
 	 */
-	public function setPublisher($publisher){
+	public function setPublisher($publisher)
+	{
 		$this->publisher = $publisher;
 	}
 
 	/**
 	 * @param Category
 	 */
-	public function setCategory($category){
+	public function setCategory($category)
+	{
 		$this->category = $category;
 	}
 
-	public function borrow(){
+	public function borrow()
+	{
 		if($this->borrowed){
 			return false;
 		} else {
@@ -162,7 +178,8 @@ class Book extends AbstractEntity
 		}
 	}
 
-	public function returnBook(){
+	public function returnBook()
+	{
 		if(!$this->borrowed){
 			return false;
 		} else {

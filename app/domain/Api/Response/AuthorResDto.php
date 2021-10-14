@@ -9,13 +9,13 @@ final class AuthorResDto
 {
 
 	/** @var int */
-	public $id;
+	public int $id;
 
 	/** @var string */
-	public $name;
+	public string $name;
 
 	/** @var string */
-	public $surname;
+	public string $surname;
 
 	public static function from(Author $author): self
 	{

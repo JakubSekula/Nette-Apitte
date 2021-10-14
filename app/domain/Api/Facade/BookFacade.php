@@ -5,6 +5,7 @@ namespace App\Domain\Api\Facade;
 use Apitte\Core\Exception\Api\ServerErrorException;
 use App\Domain\Api\Request\CreateBookReqDto;
 use App\Domain\Api\Request\CreateUserReqDto;
+use App\Domain\Api\Response\AuthorResDto;
 use App\Domain\Api\Response\BookResDto;
 use App\Domain\Api\Response\UserResDto;
 use App\Model\Database\Entity\Book;
@@ -13,75 +14,14 @@ use App\Model\Database\EntityManager;
 use App\Model\Exception\Runtime\Database\EntityNotFoundException;
 use App\Model\Security\Passwords;
 
-final class BookFacade
+final class BookFacade extends AbstractFacade
 {
-
-	/** @var EntityManager */
-	private $em;
 
 	public function __construct(EntityManager $em)
 	{
-		$this->em = $em;
-	}
-
-	/**
-	 * @param mixed[] $criteria
-	 * @param string[] $orderBy
-	 * @return BookResDto[]
-	 */
-	public function findBy(array $criteria = [], array $orderBy = ['id' => 'ASC'], int $limit = 10, int $offset = 0): array
-	{
-		$entities = $this->em->getBookRepository()->findBy($criteria, $orderBy, $limit, $offset);
-		$result = [];
-
-		foreach ($entities as $entity) {
-			$result[] = BookResDto::from($entity);
-		}
-
-		return $result;
-	}
-
-	/**
-	 * @return BookResDto[]
-	 */
-	public function findAll(int $limit = 10, int $offset = 0): array
-	{
-		return $this->findBy([], ['id' => 'ASC'], $limit, $offset);
-	}
-
-	/**
-	 * @param mixed[] $criteria
-	 * @param string[] $orderBy
-	 */
-	public function findOneByReturnBook(array $criteria, ?array $orderBy = null): Book
-	{
-		$entity = $this->em->getBookRepository()->findOneBy($criteria, $orderBy);
-
-		if (!$entity) {
-			throw new EntityNotFoundException();
-		}
-
-		return $entity;
-	}
-
-	/**
-	 * @param mixed[] $criteria
-	 * @param string[] $orderBy
-	 */
-	public function findOneBy(array $criteria, ?array $orderBy = null): BookResDto
-	{
-		$entity = $this->em->getBookRepository()->findOneBy($criteria, $orderBy);
-
-		if (!$entity) {
-			throw new EntityNotFoundException();
-		}
-
-		return BookResDto::from($entity);
-	}
-
-	public function findOne(int $id): BookResDto
-	{
-		return $this->findOneBy(['id' => $id]);
+		parent::__construct($em);
+		$this->repository = $this->em->getBookRepository();
+		$this->DtoFrom = BookResDto::class;
 	}
 
 	public function create(CreateBookReqDto $dto): Book

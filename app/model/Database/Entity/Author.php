@@ -26,10 +26,10 @@ class Author extends AbstractEntity
 	use TId;
 
 	/** @Column(type="string") */
-	private $name;
+	private string $name;
 
 	/** @Column(type="string") */
-	private $surname;
+	private string $surname;
 
 	/**
 	 * @var Author
@@ -37,20 +37,24 @@ class Author extends AbstractEntity
 	 */
 	private $books;
 
-	public function getName(){
+	public function getName(): string
+	{
 		return $this->name;
 	}
 
-	public function setName(string $name){
+	public function setName(string $name): Author
+	{
 		$this->name = $name;
 		return $this;
 	}
 
-	public function getSurname(){
+	public function getSurname(): string
+	{
 		return $this->surname;
 	}
 
-	public function setSurname(string $surname){
+	public function setSurname(string $surname)
+	{
 		$this->surname = $surname;
 	}
 

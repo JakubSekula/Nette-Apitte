@@ -8,22 +8,21 @@ use App\Model\Database\Entity\Category;
 use App\Model\Database\Entity\Location;
 use App\Model\Database\Entity\Publisher;
 use DateTimeInterface;
-use Hoa\Protocol\Node\Library;
 
 final class LocationResDto
 {
 
 	/** @var int */
-	public $id;
+	public int $id;
 
 	/** @var string */
-	public $name;
+	public string $name;
 
-	/** @var Library */
-	public $library;
+	/** @var string */
+	public string $library;
 
 	/** @var integer */
-	public $pegi;
+	public int $pegi;
 
 	public static function from(Location $location): self
 	{
